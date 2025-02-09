@@ -12,8 +12,78 @@
             <input type="text" placeholder="Enter City Name" spellcheck="false">
             <button><img src="./assets/images/search.png" alt="Image of a search icon"></button>
         </div>
+
+        <div class="weather">
+            <img src="./assets/images/rain.png" alt="Image of Rain" class="weather-icon">
+            <h1 class="temp">22°C</h1>
+            <h2 class="city">Polokwane</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="./assets/images/drizzle.png" alt="image of drizzle">
+
+                    <div>
+                        <p class="drizzle">50%</p>
+                        <p>Drizzle</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="./assets/images/clouds.png" alt="image of clouds">
+
+                    <div>
+                        <p class="cloud">50%</p>
+                        <p>Cloud</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="./assets/images/snow.png" alt="image of snow">
+
+                    <div>
+                        <p class="snow">50%</p>
+                        <p>Snow</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="./assets/images/humidity.png" alt="image of humidity">
+
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="./assets/images/wind.png" alt="image of wind">
+
+                    <div>
+                        <p class="wind">15 Km/h</p>
+                        <p>Wind</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     
     </div>
-    
+    <script>
+        const apiKey = "af44d9eb150f839391f7d672b3b5ba17";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+        const searchBox = document.querySelector(".search input");
+        const searchBtn = document.querySelector(".search button");
+
+        async function checkWeather(city)
+        {
+            const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+            var data = await response.json();
+
+            console.log(data);
+            document.querySelector(".city").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + " °C";
+            document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+            document.querySelector(".wind").innerHTML = data.wind.speed + " Km/h";
+            document.querySelector(".cloud").innerHTML = data.clouds.all;
+        }
+        searchBtn.addEventListener("click", ()=>{checkWeather(searchBox.value);})
+        
+    </script>
 </body>
 </html>
